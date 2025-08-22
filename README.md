@@ -1,4 +1,4 @@
-# ChatDocAPI
+# ChatDoc
 ![License](https://img.shields.io/github/license/0xarchit/chatdoc)
 [![GitHub stars](https://img.shields.io/github/stars/0xarchit/chatdoc?style=social)](https://github.com/0xarchit/chatdoc/stargazers)
 ![GitHub issues](https://img.shields.io/github/issues/0xarchit/chatdoc)
