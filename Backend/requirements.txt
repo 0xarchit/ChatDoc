@@ -1,0 +1,29 @@
+# Core framework
+fastapi
+uvicorn[standard]
+python-dotenv
+python-multipart
+
+# LangChain core + split packages
+langchain
+langchain-core
+langchain-text-splitters
+
+# Mistral + Milvus integrations
+langchain-mistralai
+mistralai
+langchain-milvus
+pymilvus
+
+# OpenAI-compatible client for chat
+langchain-openai
+
+# Document parsing
+PyPDF2
+pandas
+openpyxl
+python-pptx
+python-docx
+
+# Type/runtime
+pydantic>=2
