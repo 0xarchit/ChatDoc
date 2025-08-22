@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { SidebarProvider } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 import { UploadForm } from '@/components/UploadForm';
 import { ChatWindow } from '@/components/ChatWindow';
 import { HistorySidebar } from '@/components/HistorySidebar';
 import { SettingsModal } from '@/components/SettingsModal';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { apiMethods, BYOKConfig, HistoryEntry, ChatMessage } from '@/lib/api';
 import { storage } from '@/lib/storage';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import toast from 'react-hot-toast';
 
 export default function Dashboard() {
   const [selectedEntry, setSelectedEntry] = useState<HistoryEntry | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentBYOKKeys, setCurrentBYOKKeys] = useState<BYOKConfig | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const isMobile = useIsMobile();
@@ -224,42 +224,31 @@ export default function Dashboard() {
     return entryDate !== today;
   }).length || 0;
 
-  if (isMobile && sidebarOpen) {
-    return (
-      <div className="h-screen flex flex-col bg-background">
-        {/* Mobile Header */}
-        <div className="flex items-center justify-between p-4 border-b">
-          <h1 className="text-xl font-bold">ChatDoc Dashboard</h1>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
-
-        {/* Mobile Sidebar */}
-        <div className="flex-1 overflow-hidden">
-          <HistorySidebar
-            entries={chatHistory?.entries || []}
-            selectedEntry={selectedEntry}
-            onSelectEntry={(entry) => {
-              setSelectedEntry(entry);
-              setSidebarOpen(false);
-            }}
-            onDeleteEntry={handleDeleteEntry}
-            onExportHistory={handleExportHistory}
-            onClearExpired={handleClearExpired}
-            expiredCount={expiredCount}
-          />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="h-screen flex flex-col bg-background">
+      {/* Mobile Sidebar Sheet */}
+      {isMobile && (
+        <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+          <SheetContent side="left" className="p-0 w-[85vw] sm:w-[380px]">
+            <SheetHeader className="sr-only">
+              <SheetTitle>Document History</SheetTitle>
+            </SheetHeader>
+            <HistorySidebar
+              entries={chatHistory?.entries || []}
+              selectedEntry={selectedEntry}
+              onSelectEntry={(entry) => {
+                setSelectedEntry(entry);
+                setSidebarOpen(false);
+              }}
+              onDeleteEntry={handleDeleteEntry}
+              onExportHistory={handleExportHistory}
+              onClearExpired={handleClearExpired}
+              expiredCount={expiredCount}
+            />
+          </SheetContent>
+        </Sheet>
+      )}
+
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-4">
