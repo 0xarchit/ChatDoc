@@ -21,7 +21,7 @@
 9. [License](#license)
 
 ## Overview
-ChatDocAPI is a full-stack application enabling users to upload documents, extract and chunk text, store embeddings in Milvus, and query with state-of-the-art LLMs. It provides both a REST API and a web-based interface for seamless integration.
+ChatDoc is a web application enabling users to upload documents, extract and chunk text, store embeddings in Milvus, and query with state-of-the-art LLMs. It provides both a REST API and a web-based interface for seamless integration.
 
 ## Architecture
 ```mermaid
@@ -133,6 +133,16 @@ docker run --rm -p 8080:8080 \
 - **Description**: Clear entire vector store.
 - **Query**: `password` (native admin) or per-request overrides
 - **Response**: `{ "status": "all_deleted" }`
+
+## Future Goals
+- Streaming responses from the model to improve perceived latency and UX.
+- Better OCR and robust file parsing for scanned PDFs and more file formats.
+- Pluggable support for multiple vector stores (Milvus, FAISS, Pinecone, etc.).
+- Increase upload and context limits (larger files, fewer artificial word/chunk restrictions).
+- Personalization with login/signup, per-user profiles, metadata, and tags.
+- Expand supported AI models/providers and allow per-request model selection.
+
+Contributions and suggestions welcome — if you'd like to see something prioritized, open an issue or a discussion.
 
 ## Contributing
 > Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request.
