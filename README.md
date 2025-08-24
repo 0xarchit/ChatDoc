@@ -17,8 +17,9 @@
    - [Docker (Optional)](#docker-optional)
 6. [API Reference](#api-reference)
 7. [Architecture Diagram](#architecture-diagram)
-8. [Contributing](#contributing)
-9. [License](#license)
+8. [Future Goals](#future-goals)
+9. [Contributing](#contributing)
+10. [License](#license)
 
 ## Overview
 ChatDoc is a web application enabling users to upload documents, extract and chunk text, store embeddings in Milvus, and query with state-of-the-art LLMs. It provides both a REST API and a web-based interface for seamless integration.
@@ -142,9 +143,10 @@ docker run --rm -p 8080:8080 \
 - Personalization with login/signup, per-user profiles, metadata, and tags.
 - Expand supported AI models/providers and allow per-request model selection.
 
-Contributions and suggestions welcome — if you'd like to see something prioritized, open an issue or a discussion.
+
 
 ## Contributing
+Contributions and suggestions welcome — if you'd like to see something prioritized, open an issue or a discussion.
 > Contributions are welcome! Please fork the repository, create a feature branch, and submit a pull request.
 1. Fork it
 2. Create your feature branch (`git checkout -b feature/fooBar`)
