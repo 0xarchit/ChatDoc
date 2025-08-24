@@ -24,6 +24,12 @@
 ## Overview
 ChatDoc is a web application enabling users to upload documents, extract and chunk text, store embeddings in Milvus, and query with state-of-the-art LLMs. It provides both a REST API and a web-based interface for seamless integration.
 
+## Preview
+`Landing Page`![Landing Page](assets/landing.png)  
+`Dashboard`![Dashboard](assets/dashboard.png)
+
+> Complete Working Video: [chatdoc.mkv](assets/chatdoc.mkv)
+
 ## Architecture
 ```mermaid
 flowchart TB
