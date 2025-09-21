@@ -1,7 +1,7 @@
 # ChatDoc
-![License](https://img.shields.io/github/license/0xarchit/chatdoc)
 [![GitHub stars](https://img.shields.io/github/stars/0xarchit/chatdoc?style=social)](https://github.com/0xarchit/chatdoc/stargazers)
 ![GitHub issues](https://img.shields.io/github/issues/0xarchit/chatdoc)
+[![Repo Size](https://img.shields.io/github/repo-size/0xarchit/ChatDoc?style=flat-square)](https://github.com/0xarchit/ChatDoc)
 
 > A unified retrieval-augmented generation (RAG) document API and web interface, powered by FastAPI, React, Vite, Milvus, and MistralAI.
 
