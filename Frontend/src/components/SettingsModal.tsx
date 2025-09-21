@@ -243,6 +243,21 @@ export function SettingsModal({ onUpdateBYOKKeys, currentBYOKKeys }: SettingsMod
                       </ul>
                     </AlertDescription>
                   </Alert>
+
+                  {/* Required schema for Zilliz collection in BYOK mode */}
+                  <Alert className="border-primary bg-primary/10">
+                    <AlertDescription className="text-sm">
+                      <strong>Required Zilliz Collection Schema:</strong>
+                      <ul className="list-disc list-inside mt-2 space-y-1">
+                        <li><code>id</code>: INT64 (Primary Key, Auto ID)</li>
+                        <li><code>vector</code>: FLOAT_VECTOR(1024) with index</li>
+                        <li><code>text</code>: VARCHAR(65535)</li>
+                        <li><code>upload_id</code>: VARCHAR(65535)</li>
+                        <li><code>source</code>: VARCHAR(65535)</li>
+                        <li><code>upload_time</code>: FLOAT</li>
+                      </ul>
+                    </AlertDescription>
+                  </Alert>
                 </>
               )}
 
