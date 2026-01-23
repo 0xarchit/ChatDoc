@@ -11,13 +11,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional
 from pydantic import BaseModel
 
-from langchain_mistralai import MistralAIEmbeddings
-from langchain_openai import ChatOpenAI
+from langchain_mistralai import MistralAIEmbeddings, ChatMistralAI
 from langchain_milvus import Milvus
 from langchain_core.documents import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.chains import create_retrieval_chain
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 
 import PyPDF2
 import pandas as pd
@@ -234,10 +234,9 @@ def query_rag(request: QueryRequest):
         vector_store = get_vector_store()
         mk, _, _, _ = _resolve_settings()
 
-    llm = ChatOpenAI(
-        model="gpt-5-nano",
-        api_key="not-req",
-        base_url="https://text.pollinations.ai/openai",
+    llm = ChatMistralAI(
+        model="mistral-medium-latest",
+        api_key=mk,
     )
     
     system_prompt = (
@@ -249,13 +248,13 @@ def query_rag(request: QueryRequest):
         "If Anything out of data from file is asked then say "
         "It is not related to uploaded document. Please ask Something Valid"
         "\n\n"
-        "{context}"
+        "Context: {context}"
     )
     
     prompt = ChatPromptTemplate.from_messages(
         [
             ("system", system_prompt),
-            ("human", "{input}"),
+            ("human", "{question}"),
         ]
     )
     
@@ -263,11 +262,19 @@ def query_rag(request: QueryRequest):
         search_kwargs={"expr": f'upload_id == "{request.upload_id}"', "k": 4}
     )
     
-    chain = create_retrieval_chain(retriever, prompt | llm)
+    def format_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+    
+    chain = (
+        {"context": retriever | format_docs, "question": RunnablePassthrough()}
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
     
     try:
-        response = chain.invoke({"input": request.question})
-        return {"answer": response["answer"]}
+        response = chain.invoke(request.question)
+        return {"answer": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating response: {str(e)}")
 
